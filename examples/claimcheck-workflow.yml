@@ -1,0 +1,20 @@
+# Copy this into .github/workflows/claimcheck.yml in your repo.
+name: claimcheck
+on: [pull_request]
+permissions:
+  pull-requests: write   # to post the receipt comment
+jobs:
+  claimcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Option A: the composite action (posts a receipt comment)
+      - uses: skyswordw/claimcheck@main
+        # with:
+        #   fail-on-refuted: "true"   # block the PR if a checkable claim is false
+
+      # Option B (equivalent, no comment): plain npx
+      # - uses: actions/setup-node@v4
+      #   with: { node-version: 22 }
+      # - env: { GH_TOKEN: "${{ github.token }}" }
+      #   run: npx @skyswordw/claimcheck --repo "${{ github.repository }}" --pr "${{ github.event.pull_request.number }}"

@@ -1,0 +1,9 @@
+{
+  "title": "Small docs tweak",
+  "body": "Just a one-line change. Fixes #99999. Adds tests. Zero dependencies.",
+  "facts": {
+    "diff": { "filesChanged": 1, "additions": 1, "deletions": 1, "files": ["README.md"] },
+    "existingIssues": [],
+    "addedRuntimeDeps": 2
+  }
+}

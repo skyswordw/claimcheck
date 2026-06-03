@@ -1,0 +1,31 @@
+name: "claimcheck"
+description: "Post an honest verification receipt for a pull request's factual claims."
+branding:
+  icon: "check-square"
+  color: "purple"
+inputs:
+  fail-on-refuted:
+    description: "Exit non-zero (block the PR) if a checkable claim is refuted."
+    required: false
+    default: "false"
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: "22"
+    - name: Run claimcheck and post the receipt
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        pr="${{ github.event.pull_request.number }}"
+        repo="${{ github.repository }}"
+        if [ -z "$pr" ]; then echo "claimcheck: not a pull_request event; skipping."; exit 0; fi
+        flags="--no-fail"
+        if [ "${{ inputs.fail-on-refuted }}" = "true" ]; then flags=""; fi
+        npx -y @skyswordw/claimcheck --repo "$repo" --pr "$pr" $flags > receipt.md
+        code=$?
+        cat receipt.md
+        gh pr comment "$pr" --repo "$repo" --body-file receipt.md || true
+        exit $code

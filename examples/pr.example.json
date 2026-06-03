@@ -1,0 +1,14 @@
+{
+  "title": "Speed up the tokenizer",
+  "body": "Makes parsing 24% faster on large files. Fixes #123. Changes 5 files, removes 200 lines. Adds unit tests. Zero dependencies.",
+  "facts": {
+    "diff": {
+      "filesChanged": 6,
+      "additions": 40,
+      "deletions": 200,
+      "files": ["src/tok.ts", "src/tok.test.ts", "src/lexer.ts", "src/index.ts", "README.md", "CHANGELOG.md"]
+    },
+    "existingIssues": [123],
+    "addedRuntimeDeps": 0
+  }
+}
