@@ -108,6 +108,14 @@ npm run build    # emit dist/
 
 The `gh` fact-gathering is injectable, so the extractor, verifier, receipt, and CLI orchestration are all unit-tested without network access.
 
+## Related
+
+Part of a small set of honest-by-default QA tools for AI-assisted development:
+
+- **[skillport](https://github.com/skyswordw/skillport)** — static cross-agent skill linter
+- **[skillmatrix](https://github.com/skyswordw/skillmatrix)** — behavioral cross-agent skill testing
+- **claimcheck** (this repo) — a CI receipt for the claims your PR makes
+
 ## License
 
 MIT © skyswordw
