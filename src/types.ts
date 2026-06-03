@@ -22,3 +22,38 @@ export interface Claim {
   issue?: number;
   verifiability: Verifiability;
 }
+
+/** Diff statistics for the PR under review. */
+export interface DiffStats {
+  filesChanged: number;
+  additions: number;
+  deletions: number;
+  /** Paths touched by the PR (used to detect test files). */
+  files: string[];
+}
+
+/** The facts a verifier needs to check deterministic claims. */
+export interface PrFacts {
+  diff: DiffStats;
+  /** Issue numbers that exist in the repository, or null if not checked. */
+  existingIssues: number[] | null;
+  /** Runtime dependencies the PR adds (0 = none), or null if not determined. */
+  addedRuntimeDeps: number | null;
+}
+
+export type VerdictStatus = "verified" | "refuted" | "unverified";
+
+export interface Verdict {
+  claim: Claim;
+  status: VerdictStatus;
+  detail: string;
+  /** The measured reality, when available (e.g. "8 files"). */
+  measured?: string;
+}
+
+/** Offline input for the CLI: a PR plus the facts to check it against. */
+export interface PullRequestInput {
+  title?: string;
+  body: string;
+  facts: PrFacts;
+}
