@@ -7,5 +7,6 @@ export interface CliResult {
 export interface CliDeps {
     ghPr?: (repo: string, pr: number) => GhPr;
     ghIssueExists?: (repo: string, issue: number) => boolean;
+    ghAddedRuntimeDeps?: (repo: string, pr: number) => number | null;
 }
 export declare function runCli(argv: string[], deps?: CliDeps): CliResult;

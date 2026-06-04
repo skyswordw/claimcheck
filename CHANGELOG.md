@@ -6,6 +6,26 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-06-04
+
+Hardening pass (from a multi-lens audit).
+
+### Fixed
+- `TEST_FILE_RE` now recognizes standalone `test.ts`/`spec.ts`, `.cy.`/
+  `.integration.`/`.snap`, `__test__` (singular), and `e2e` — so an honest
+  "adds tests" claim is no longer falsely **refuted**.
+- The GitHub Action posts a **sticky** receipt (edits its previous comment
+  instead of spamming a new one each run), skips empty receipts, and no longer
+  swallows a failed comment post.
+
+### Added
+- Multi-issue `fixes` lists: `fixes #100, #200, and #300` now yields one claim
+  per issue (previously only the first was extracted).
+- Negation handling: a disclaimed claim ("doesn't fix #123") is skipped instead
+  of being invented and then verified/refuted.
+- gh-mode now computes the real dependency delta from the PR's `package.json`
+  diff, so `zero dependencies` is actually verified live (was always unverified).
+
 ## [0.1.0] - 2026-06-04
 
 Initial release: extract a PR's factual claims and verify the checkable ones.

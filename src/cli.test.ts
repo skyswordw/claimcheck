@@ -65,7 +65,8 @@ test("gh mode with injected fakes", () => {
     diff: { filesChanged: 2, additions: 10, deletions: 5, files: ["x.ts"] },
   });
   const ghIssueExists = (_repo: string, n: number): boolean => n === 7;
-  const res = runCli(["--repo", "o/r", "--pr", "12"], { ghPr, ghIssueExists });
+  const ghAddedRuntimeDeps = (_repo: string, _pr: number): number | null => 0;
+  const res = runCli(["--repo", "o/r", "--pr", "12"], { ghPr, ghIssueExists, ghAddedRuntimeDeps });
   assert.match(res.output, /Issue #7 exists/);
   assert.match(res.output, /unverified/i);
 });

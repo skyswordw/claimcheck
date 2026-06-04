@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { extractClaims } from "./extract.js";
 import { verifyAll } from "./verify.js";
 import { renderMarkdown, renderJson, summarize } from "./receipt.js";
-import { ghPr as realGhPr, ghIssueExists as realGhIssueExists } from "./facts.js";
+import { ghPr as realGhPr, ghIssueExists as realGhIssueExists, ghAddedRuntimeDeps as realGhAddedRuntimeDeps, } from "./facts.js";
 const VERSION = "0.1.0";
 const HELP = `claimcheck ${VERSION} — a CI receipt for the claims your PR makes
 
@@ -69,9 +69,10 @@ export function runCli(argv, deps = {}) {
             const ghIssueExists = deps.ghIssueExists ?? realGhIssueExists;
             const pr = ghPr(values.repo, Number(values.pr));
             text = `${pr.title}\n\n${pr.body}`;
+            const ghAddedRuntimeDeps = deps.ghAddedRuntimeDeps ?? realGhAddedRuntimeDeps;
             const issues = uniqueIssues(extractClaims(text));
             const existingIssues = issues.filter((n) => ghIssueExists(values.repo, n));
-            facts = { diff: pr.diff, existingIssues, addedRuntimeDeps: null };
+            facts = { diff: pr.diff, existingIssues, addedRuntimeDeps: ghAddedRuntimeDeps(values.repo, Number(values.pr)) };
         }
         else if (positionals.length) {
             const input = JSON.parse(readFileSync(positionals[0], "utf8"));

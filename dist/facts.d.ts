@@ -8,3 +8,8 @@ export interface GhPr {
 export declare function ghPr(repo: string, pr: number): GhPr;
 /** Whether an issue exists/is accessible in the repo. */
 export declare function ghIssueExists(repo: string, issue: number): boolean;
+/**
+ * Count runtime dependencies the PR adds to the root package.json (0 = none),
+ * or null if it can't be determined — never guessed.
+ */
+export declare function ghAddedRuntimeDeps(repo: string, pr: number): number | null;

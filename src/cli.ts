@@ -5,7 +5,12 @@ import { fileURLToPath } from "node:url";
 import { extractClaims } from "./extract.js";
 import { verifyAll } from "./verify.js";
 import { renderMarkdown, renderJson, summarize } from "./receipt.js";
-import { ghPr as realGhPr, ghIssueExists as realGhIssueExists, type GhPr } from "./facts.js";
+import {
+  ghPr as realGhPr,
+  ghIssueExists as realGhIssueExists,
+  ghAddedRuntimeDeps as realGhAddedRuntimeDeps,
+  type GhPr,
+} from "./facts.js";
 import type { PrFacts, PullRequestInput } from "./types.js";
 
 const VERSION = "0.1.0";
@@ -41,6 +46,7 @@ export interface CliResult {
 export interface CliDeps {
   ghPr?: (repo: string, pr: number) => GhPr;
   ghIssueExists?: (repo: string, issue: number) => boolean;
+  ghAddedRuntimeDeps?: (repo: string, pr: number) => number | null;
 }
 
 function uniqueIssues(claims: ReturnType<typeof extractClaims>): number[] {
@@ -81,9 +87,10 @@ export function runCli(argv: string[], deps: CliDeps = {}): CliResult {
       const ghIssueExists = deps.ghIssueExists ?? realGhIssueExists;
       const pr = ghPr(values.repo, Number(values.pr));
       text = `${pr.title}\n\n${pr.body}`;
+      const ghAddedRuntimeDeps = deps.ghAddedRuntimeDeps ?? realGhAddedRuntimeDeps;
       const issues = uniqueIssues(extractClaims(text));
       const existingIssues = issues.filter((n) => ghIssueExists(values.repo as string, n));
-      facts = { diff: pr.diff, existingIssues, addedRuntimeDeps: null };
+      facts = { diff: pr.diff, existingIssues, addedRuntimeDeps: ghAddedRuntimeDeps(values.repo, Number(values.pr)) };
     } else if (positionals.length) {
       const input = JSON.parse(readFileSync(positionals[0] as string, "utf8")) as PullRequestInput;
       if (!input || typeof input.body !== "string" || !input.facts || !input.facts.diff) {

@@ -1,6 +1,7 @@
 import type { Claim, PrFacts, Verdict, VerdictStatus } from "./types.js";
 
-const TEST_FILE_RE = /(^|\/)(tests?|spec|__tests__)(\/|$)|\.(test|spec)\./i;
+const TEST_FILE_RE =
+  /(^|\/)(tests?|specs?|__tests?__|e2e|cypress)(\/|$)|(^|\/)(tests?|specs?)\.[a-z0-9]+$|\.(test|spec|cy|integration|e2e)\.|\.snap$/i;
 
 function verdict(claim: Claim, status: VerdictStatus, detail: string, measured?: string): Verdict {
   const v: Verdict = { claim, status, detail };

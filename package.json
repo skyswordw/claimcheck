@@ -1,6 +1,6 @@
 {
   "name": "@skyswordw/claimcheck",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A CI receipt for the claims your PR makes: extract a pull request's factual claims and verify the checkable ones, honestly flagging the rest as unverified.",
   "type": "module",
   "bin": {

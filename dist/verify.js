@@ -1,4 +1,4 @@
-const TEST_FILE_RE = /(^|\/)(tests?|spec|__tests__)(\/|$)|\.(test|spec)\./i;
+const TEST_FILE_RE = /(^|\/)(tests?|specs?|__tests?__|e2e|cypress)(\/|$)|(^|\/)(tests?|specs?)\.[a-z0-9]+$|\.(test|spec|cy|integration|e2e)\.|\.snap$/i;
 function verdict(claim, status, detail, measured) {
     const v = { claim, status, detail };
     if (measured !== undefined)

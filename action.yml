@@ -27,5 +27,9 @@ runs:
         npx -y @skyswordw/claimcheck --repo "$repo" --pr "$pr" $flags > receipt.md
         code=$?
         cat receipt.md
-        gh pr comment "$pr" --repo "$repo" --body-file receipt.md || true
-        exit $code
+        [ -s receipt.md ] || { echo "claimcheck: empty receipt, not commenting."; exit "$code"; }
+        # Sticky: edit the existing claimcheck comment instead of posting a new one each run.
+        if ! gh pr comment "$pr" --repo "$repo" --edit-last --body-file receipt.md 2>/dev/null; then
+          gh pr comment "$pr" --repo "$repo" --body-file receipt.md
+        fi
+        exit "$code"
