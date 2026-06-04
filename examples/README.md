@@ -18,9 +18,10 @@ tests" (a `*.test.ts` is in the diff → ✅), "zero dependencies" (✅).
 
 ## `refuted.example.json`
 
-Claims `fixes #99999` (issue absent → ❌), "adds tests" (no test file in the
-diff → ❌), and "zero dependencies" while the facts say 2 were added (❌). Exits
-`1` (use `--no-fail` to report without failing).
+Claims `fixes #99999` (issue absent → ❌), "adds tests" (no test file detected →
+⚠️ unverified — a heuristic miss is never treated as proof), and "zero
+dependencies" while the facts say 2 were added (❌). Exits `1` because of the two
+refuted claims (use `--no-fail` to report without failing).
 
 See [`claimcheck-workflow.yml`](./claimcheck-workflow.yml) for a copy-paste CI
 workflow.

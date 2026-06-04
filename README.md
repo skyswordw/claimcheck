@@ -93,6 +93,10 @@ Or plain `npx` (see [`examples/claimcheck-workflow.yml`](./examples/claimcheck-w
 
 Existing PR-benchmark tools (github-action-benchmark, Bencher, …) verify *pre-wired* benchmarks; they never read what the PR's description actually *claims*. claimcheck starts from the prose — the claims a human will skim and trust — and either backs them with evidence or marks them unverified. It's the difference between "the benchmark we set up passed" and "the PR's own claim was checked."
 
+## Seen in the wild
+
+I ran claimcheck's live `gh` mode over **40 real merged PRs**: all 40 were fetched, parsed, and checked with **zero errors**; only **22%** contained a claim it could extract (verifiable claims are rare); and it **verified 9, refuted 0, and was honestly unverified on the rest**. The run also surfaced — and fixed — an honesty bug in claimcheck itself (it used to refute "adds tests" on a heuristic miss). Full writeup: [docs/claims-in-the-wild.md](./docs/claims-in-the-wild.md).
+
 ## Roadmap
 
 A pluggable **reproducer** (run the PR's benchmark/coverage in a clean container) to upgrade perf/coverage claims from `unverified` to measured `verified`/`refuted` with a `claimed X, measured Y ± noise` receipt. More claim kinds. Sticky PR comments.

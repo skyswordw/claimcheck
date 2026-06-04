@@ -6,6 +6,17 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-06-04
+
+Surfaced by running claimcheck over 40 real public PRs ("in the wild").
+
+### Fixed
+- An "adds tests" claim with no detected test file is now **`unverified`**, not
+  `refuted`. Test detection is a naming heuristic (it can miss CI-based tests,
+  framework-specific test files, or tests added to an existing file), and a
+  heuristic miss is not proof the claim is false — claimcheck must never refute
+  on weak evidence.
+
 ## [0.2.0] - 2026-06-04
 
 Hardening pass (from a multi-lens audit).

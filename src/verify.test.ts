@@ -46,6 +46,6 @@ test("coverage adds-tests: verified when a test file is in the diff", () => {
   assert.equal(verifyClaim(claim, facts()).status, "verified");
   assert.equal(
     verifyClaim(claim, facts({ diff: { filesChanged: 1, additions: 10, deletions: 0, files: ["src/a.ts"] } })).status,
-    "refuted"
+    "unverified" // heuristic miss is not proof; never falsely refute an honest "adds tests"
   );
 });

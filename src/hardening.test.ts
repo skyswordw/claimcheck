@@ -34,5 +34,5 @@ test("verify: standalone test/spec files and common variants count as tests", ()
   for (const f of ["test.ts", "spec.ts", "src/a.cy.ts", "e2e/login.ts", "src/x.integration.ts", "__test__/y.ts", "a.test.ts.snap"]) {
     assert.equal(verifyClaim(addsTests, factsWith([f])).status, "verified", `expected ${f} to count as a test file`);
   }
-  assert.equal(verifyClaim(addsTests, factsWith(["src/app.ts", "README.md"])).status, "refuted");
+  assert.equal(verifyClaim(addsTests, factsWith(["src/app.ts", "README.md"])).status, "unverified");
 });

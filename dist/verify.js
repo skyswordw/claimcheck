@@ -57,10 +57,13 @@ export function verifyClaim(claim, facts) {
             return verdict(claim, "unverified", "No deterministic check for this size claim.");
         }
         case "coverage": {
+            // A test file in the diff is positive evidence; its ABSENCE is not proof —
+            // test detection is a naming heuristic (CI workflows, framework-specific test
+            // files, or tests added to an existing file can be missed). So: not found -> unverified.
             const testFile = facts.diff.files.find((f) => TEST_FILE_RE.test(f));
             return testFile
                 ? verdict(claim, "verified", `Diff touches a test file (${testFile}).`, testFile)
-                : verdict(claim, "refuted", "No test files found in the diff.");
+                : verdict(claim, "unverified", "No test file detected by naming heuristic — verify manually (test detection is heuristic).");
         }
         default:
             return verdict(claim, "unverified", "No deterministic check available.");
